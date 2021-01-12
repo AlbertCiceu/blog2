@@ -113,7 +113,7 @@ coordinates = {latitude = "44.4355500", longitude = "26.1023472"}
 #   Set to `[]` to disable, or comment out unwanted lines with a hash `#`.
 contact_links = [
   {icon = "twitter", icon_pack = "fab", name = "DM Me", link = "https://twitter.com/AlbertCiceu"},
-  {icon = "skype", icon_pack = "fab", name = "Skype Me", link = "skype:ffda251eb7321945"},
+  #{icon = "skype", icon_pack = "fab", name = "Skype Me", link = "skype:ffda251eb7321945"},
   {icon = "facebook", icon_pack = "fab", name = "Find me on Facebook", link = "https://www.facebook.com/albert.ciceu"},
   #{icon = "keybase", icon_pack = "fab", name = "Chat on Keybase", link = "https://keybase.io/"},
   #{icon = "comments", icon_pack = "fas", name = "Discuss on Forum", link = "https://discourse.gohugo.io"},
