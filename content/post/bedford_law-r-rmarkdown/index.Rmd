@@ -1,8 +1,10 @@
 ---
 title: 'Legea lui Benford si datele Eurostat despre silvicultura '
 author: "Albert Ciceu"
-date: "2021-01-12 22:07:05"
+date: '2021-01-11T21:13:14-05:00'
 categories: R
+output:
+  html_document: default
 tags:
 - R Markdown
 - Benford Law
@@ -15,7 +17,6 @@ image:
 
 
 ```{r setup, include=FALSE}
-getwd()
 knitr::opts_chunk$set(collapse =TRUE)
 ```
 
@@ -35,7 +36,7 @@ require(purrr)
 ```
 
 
-In ultimele luni, odata cu aparitia datelor despre infectarile cu COVID-19, s-a vorbit destul de mult pe diverse [platforme](https://www.graphs.ro/covid_benford_law.php?fbclid=IwAR27CP6iudTb5BsdsbI6C0H3d6Ggjoap7xD6XLowSgtK4ZUCgjjjbuV30sE) despre legea lui Benford sau legea primei cifre asa cum mai este numita. Aceasta lege, care de fapt nu este a lui Bedford, fiind descrisa pentru prima data de Simon Newcomb in 1881 [1], dar care poarta numele lui Frank Benford datorita lucrarii acestuia din anul 1938, numita Legea Numerelor Anormale [2], este foarte des folosita pentru detectarea datelor frauduloase, adica a datelor inventate sau masluite.
+In ultimele luni, odata cu aparitia datelor despre infectarile cu COVID-19, s-a vorbit destul de mult pe diverse [platforme](https://www.graphs.ro/covid_benford_law.php?fbclid=IwAR27CP6iudTb5BsdsbI6C0H3d6Ggjoap7xD6XLowSgtK4ZUCgjjjbuV30sE) despre legea lui Benford sau legea primei cifre asa cum mai este numita. Aceasta lege, care de fapt nu este a lui Bedford, fiind descrisa pentru prima data de Simon Newcomb in 1881 [1], dar care poarta numele lui Frank Benford datorita lucrarii acestuia din anul 1938, numita Legea Numerelor Anormale [2], este foarte des folosita pentru investigarea datelor frauduloase, adica a datelor inventate sau masluite.
 
 Lege spune ca intr-un sir de numere, distributia frecventelor primei cifre nu este uniforma (fiecare cifra apare cu o probabilitate egala de 11%) ci negativ exponentiala.
 Practic, 30.1% din numerele sirului vor incepe cu cifra 1 pe cand doar 4.6% vor incepe cu cifra 9.
@@ -94,11 +95,11 @@ Cautarea a gasit 6 seturi de date dar eu sunt interesat de setul *Roundwood, fue
 id <- search_eurostat("Roundwood, fuelwood and other basic products", 
                          type = "dataset")$code[1]
 dat <- get_eurostat(id, time_format = "num",type = "label")
-head(dat)
+kable(head(dat))
 ```
 
 
- Folosind functia de mai jos, am obtinut valorile unice primele patru coloane. Pe baza acestora am selectat valorile in mii de metri cubi care includ toate speciile si am elimninat tarile Malta, Islanda si agregarea facuta pentru cele 27 de tari europene la nivelul anului 2020 pentru ca au un numar redus de date.  De asemenea denumirea Germaniei si a Europei era prea lunga (*Germany (until 1990 former territory of the FRG),European Union - 28 countries (2013-2020)*) si le-am redenumit.
+Folosind functia de mai jos, am obtinut valorile unice primele patru coloane. Pe baza acestora am selectat valorile in mii de metri cubi care includ toate speciile si am elimninat tarile Malta, Islanda si agregarea facuta pentru cele 27 de tari europene la nivelul anului 2020 pentru ca au un numar redus de date.  De asemenea denumirea Germaniei si a Europei era prea lunga (*Germany (until 1990 former territory of the FRG),European Union - 28 countries (2013-2020)*) si le-am redenumit.
 ```{r,message=FALSE}
 apply(dat[c(1:4)],2,unique)
 ```
@@ -116,10 +117,9 @@ prod_2<-prod
 ```
 
 
-Analiza se va concentra pe prima cifra a fiecarei valori transmise, desi am uitat sa mentionez mai sus, legea lui Benford se aplica si celei de-a doua cifre bineinteles cu alte proportii datorita datorita cifrei 0.
-```{r,message=FALSE}
+Analiza se va concentra pe prima cifra a fiecarei valori transmise, desi am uitat sa mentionez mai sus, legea lui Benford se aplica si celei de-a doua cifre bineinteles cu alte proportii datorita cifrei 0.
+```{r,message=FALSE, message=FALSE}
 prod$first_digit<-as.numeric(substr(prod$values, 1, 1))
-unique((prod$first_digit))
 prod$second_digit<-as.numeric(substr(prod$values, 2, 2))
 
 prod<-prod %>% filter(first_digit>0) %>%
@@ -134,8 +134,8 @@ gg1<-
   labs(x="Cifra",y="%")+
   theme(legend.position = "none")+
   theme_bw()
-hide_legend(ggplotly(gg1))
-# gg1
+# hide_legend(ggplotly(gg1))
+gg1
 ```
 Din graficul de mai sus se pare ca majoritatea tarilor au aceeasi distributie negativ exponentiala cu cifra 1 in proportie de aproximativ 30-40%. Linia rosie reprezinta distributia teoretica a lui Benford iar barele reprezinta distributia experimentala aferenta fiecarei tari.
 
@@ -159,8 +159,8 @@ output %>% ggplot (aes(reorder(geo,-D),D, fill=Semnificatie),)+
 
 
 ```
-Se pare ca doar doua tari urmeaza perfect legea lui Benford. Romania se situeaza relativ bine, apropiata de media Europeana, cu o abatere de aproximativ 3.5. Motivele pentru care aceste seturi de date nu urmeaza perfect legea lui Benford pot fi diverse. Poate testul folosit nu este destul de riguros si obtinerea valorii *p* prin simulare, asa cum o face pachetul folosit, nu este cea mai exacta. In analiza am folosit seturi multiple de date (lemn rotund, lemn de foc, lemn rotund pentru industrie) iar aceasta decizie influenteaza de asemenea rezultatul sau poate chiar asta este adevarata abatere a datelor la nivel european de la legea lui Benford. Pentru a ne face o idee clara ar trebui aplicate si comparate cel putin inca doua teste statistice. Mai departe analiza poate continua si se poate indrepta catre cifrele din sir care nu respecta legea lui Benford. Pachetul folosit mai sus ofera o varietate de teste in acest sens. 
-Pentru mine insa, a fost destul sa-mi fac o idee asupra validitatii datelor pe plan European si sa testez legea lui Benford pe un set de date despre silvicultura.
+Se pare ca doar doua tari urmeaza perfect legea lui Benford. Romania se situeaza relativ bine, apropiata de media Europeana. Motivele pentru care aceste seturi de date nu urmeaza perfect legea lui Benford pot fi diverse. Poate testul folosit nu este destul de riguros si obtinerea valorii *p* prin simulare, asa cum o face pachetul folosit, nu este cea mai exacta. De asemenea in analiza am folosit seturi multiple de date (lemn rotund, lemn de foc, lemn rotund pentru industrie) iar aceasta decizie a dus la obtinerea acestui rezultat sau poate chiar este o problema la nivel european cu datele transmise catre Eurostat. Pentru a ne face o idee clara ar trebui aplicate si comparate cel putin inca doua teste statistice. Mai departe analiza poate continua si se poate indrepta catre cifrele din sir care nu respecta legea lui Benford. Pachetul folosit mai sus ofera o varietate de teste in acest sens. 
+Pentru mine insa a fost destul sa-mi fac o idee asupra validitatii datelor. Grafic se poate observa cum majoritatea tarilor au aceasi distributie negativ exponentiala ceea ce ma face sa cred ca datele transmise de Romania si celalate tari europene arata cel putin tendinta reala a activitatilor din silvicultura.
 
 
  <br />
@@ -170,8 +170,8 @@ Referinte
  <br />
 2. Benford, F. (1938). The law of anomalous numbers. Proceedings of the American philosophical society, 551-572.
  <br />
-3. Scott, P. D., & Fasli, M. (2001). Benford's law: An empirical investigation and a novel explanation. Unpublished manuscript.
- <br />
+3. Scott, P. D., & Fasli, M. (2001). Benford's law: An empirical investigation and a novel explanation. Unpublished manuscript
+ <br />.
 4. Berger, A., & Hill, T. P. (2011). A basic theory of Benford's Law. Probability Surveys, 8, 1-126.
  <br />
 5. Fewster, R. M. (2009). A simple explanation of Benford's Law. The American Statistician, 63(1), 26-32.
