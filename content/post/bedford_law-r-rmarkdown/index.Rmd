@@ -166,8 +166,8 @@ Referinte
  <br />
 2. Benford, F. (1938). The law of anomalous numbers. Proceedings of the American philosophical society, 551-572.
  <br />
-3. Scott, P. D., & Fasli, M. (2001). Benford's law: An empirical investigation and a novel explanation. Unpublished manuscript
- <br />.
+3. Scott, P. D., & Fasli, M. (2001). Benford's law: An empirical investigation and a novel explanation. Unpublished manuscript.
+ <br />
 4. Berger, A., & Hill, T. P. (2011). A basic theory of Benford's Law. Probability Surveys, 8, 1-126.
  <br />
 5. Fewster, R. M. (2009). A simple explanation of Benford's Law. The American Statistician, 63(1), 26-32.
