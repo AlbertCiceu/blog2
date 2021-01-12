@@ -134,8 +134,8 @@ gg1<-
   labs(x="Cifra",y="%")+
   theme(legend.position = "none")+
   theme_bw()
-# hide_legend(ggplotly(gg1))
-gg1
+hide_legend(ggplotly(gg1))
+# gg1
 ```
 Din graficul de mai sus se pare ca majoritatea tarilor au aceeasi distributie negativ exponentiala cu cifra 1 in proportie de aproximativ 30-40%. Linia rosie reprezinta distributia teoretica a lui Benford iar barele reprezinta distributia experimentala aferenta fiecarei tari.
 
