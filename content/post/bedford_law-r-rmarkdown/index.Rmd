@@ -156,7 +156,7 @@ output %>% ggplot (aes(reorder(geo,-D),D, fill=Semnificatie),)+
 
 ```
 Se pare ca doar doua tari urmeaza perfect legea lui Benford. Romania se situeaza relativ bine, apropiata de media Europeana. Motivele pentru care aceste seturi de date nu urmeaza perfect legea lui Benford pot fi diverse. Poate testul folosit nu este destul de riguros si obtinerea valorii *p* prin simulare, asa cum o face pachetul folosit, nu este cea mai exacta. De asemenea in analiza am folosit seturi multiple de date (lemn rotund, lemn de foc, lemn rotund pentru industrie) iar aceasta decizie poate fi motivul obtinerii acestui rezultat sau poate, chiar este o problema la nivel european cu datele transmise catre Eurostat. Pentru a ne face o idee clara ar trebui aplicate si comparate cel putin inca doua teste statistice. Mai departe analiza poate continua si se poate indrepta catre cifrele din sir care nu respecta legea lui Benford. Pachetul folosit mai sus ofera o varietate de teste in acest sens. 
-Pentru mine insa a fost destul sa-mi fac o idee asupra validitatii datelor. Grafic se poate observa cum majoritatea tarilor au aceasi distributie negativ exponentiala ceea ce ma face sa cred ca datele transmise de Romania si celalate tari europene arata cel putin tendinta reala a activitatilor din silvicultura.
+Pentru mine insa a fost destul sa-mi fac o idee asupra validitatii datelor. Grafic se poate observa cum majoritatea tarilor au aceasi distributie negativ exponentiala ceea ce ma face sa cred ca datele Eurostat urmeaza legea lui Benford.
 
 
  <br />
