@@ -3,8 +3,6 @@ title: 'Legea lui Benford si datele Eurostat despre silvicultura '
 author: "Albert Ciceu"
 date: '2021-01-11T21:13:14-05:00'
 categories: R
-output:
-  html_document: default
 tags:
 - R Markdown
 - Benford Law
@@ -21,7 +19,7 @@ image:
 
 
 
-In ultimele luni, odata cu aparitia datelor despre infectarile cu COVID-19, s-a vorbit destul de mult pe diverse [platforme](https://www.graphs.ro/covid_benford_law.php?fbclid=IwAR27CP6iudTb5BsdsbI6C0H3d6Ggjoap7xD6XLowSgtK4ZUCgjjjbuV30sE) despre legea lui Benford sau legea primei cifre asa cum mai este numita. Aceasta lege, care de fapt nu este a lui Bedford, fiind descrisa pentru prima data de Simon Newcomb in 1881 [1], dar care poarta numele lui Frank Benford datorita lucrarii acestuia din anul 1938, numita Legea Numerelor Anormale [2], este foarte des folosita pentru investigarea datelor frauduloase, adica a datelor inventate sau masluite.
+In ultimele luni, odata cu aparitia datelor despre infectarile cu COVID-19, s-a vorbit destul de mult pe diverse [platforme](https://www.graphs.ro/covid_benford_law.php?fbclid=IwAR27CP6iudTb5BsdsbI6C0H3d6Ggjoap7xD6XLowSgtK4ZUCgjjjbuV30sE) despre legea lui Benford sau legea primei cifre asa cum mai este numita. Aceasta lege, care de fapt nu este a lui Benford, fiind descrisa pentru prima data de Simon Newcomb in 1881 [1], dar care poarta numele lui Frank Benford datorita lucrarii acestuia din anul 1938, numita Legea Numerelor Anormale [2], este foarte des folosita pentru detectarea datelor frauduloase, adica a datelor fabricate sau masluite.
 
 Lege spune ca intr-un sir de numere, distributia frecventelor primei cifre nu este uniforma (fiecare cifra apare cu o probabilitate egala de 11%) ci negativ exponentiala.
 Practic, 30.1% din numerele sirului vor incepe cu cifra 1 pe cand doar 4.6% vor incepe cu cifra 9.
@@ -36,17 +34,17 @@ Utilizand relatia de mai sus putem genera probabilitatea asociata fiecarei cifre
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 
-Legea este foarte simpla, si se aplica unui numar mare de seturi de date. Benford a testat legea pe 20 de seturi de date care apar fie in natura fie, au la baza actiunile omului. De exemplu, lungimea si suprafata raurilor din lume, numerele asociate adreselor sau rata mortalitati, toate acestea dar si multe altele seturi de date urmeaza legea lui Benford. 
+Legea este foarte simpla si se aplica unui numar mare de seturi de date. Benford a testat legea pe 20 de seturi de date care apar fie in natura fie au la baza actiunile omului. De exemplu, lungimea si suprafata raurilor din lume, numerele asociate adreselor sau rata mortalitati, toate acestea dar si multe altele seturi de date urmeaza legea lui Benford. 
 
-Motivele aparitiei acestei legitati sunt multiple. In primul rand distributia lui Benford este o distributie secundara, adica este rezultatul unei alte distributii si anume, a distributiei numerelor din care extragem prima cifra. Cercetatorii de la Univesitatea din Essex au demonstrat [3] ca legea lui Benford apare de cele mai multe ori atunci cand sirul de date are o distributie lognormala, este unimodala si are o asimetrie pozitiva. Tot acestia mentioneaza ca nu exista o regula generala si legea lui Benford apare si in alte cazuri acoperite de urmatoarele lucrari [3], [4], [5].
+Acest fenomen apare din mai multe motive. O explicatie ar fi ca distributia lui Benford este o distributie secundara, adica este rezultatul unei alte distributii si anume, a distributiei numerelor din care extragem prima cifra. Cercetatorii de la Univesitatea din Essex au demonstrat [3] ca legea lui Benford apare de cele mai multe ori atunci cand sirul de date are o distributie lognormala, este unimodala si are o asimetrie pozitiva. Tot acestia mentioneaza ca nu exista o regula generala si legea lui Benford apare si in alte cazuri acoperite de urmatoarele lucrari [3], [4], [5].
 
 In 1972, [Hal Varian](https://people.ischool.berkeley.edu/~hal/) propune aplicarea legi in detectarea fraudelor financiare. Practic odata stabilita aplicabilitatea legii pe un tip de date abaterea unui alt set de date de acelasi tip de la legea lui Benford ar trebui investigata. Asa a ajuns legea lui Benford sa fie folosita in [alegeri](https://physicsworld.com/a/benfords-law-and-the-2020-us-presidential-election-nothing-out-of-the-ordinary/) [6], contabilitate, cercetare si chiar intr-un film cel putin interesant numit [The Accountant](https://www.imdb.com/title/tt2140479/).
-Foarte important este faptul ca lege lui Benford nu te gaseste "vinovat" daca datele tale nu urmeaza distributia ci doar arunca un semn de indoiala asupra acestora care poate fi foarte repede inlaturat dupa investigarea amanuntita a datelor. 
+Foarte important este faptul ca lege lui Benford nu te gaseste *vinovat* daca datele tale nu urmeaza distributia ci doar arunca un semn de indoiala asupra acestora care poate fi foarte repede inlaturat dupa investigarea amanuntita a datelor. 
 
 **Acum despre paduri**.  <br />
-Discutam acum ceva vreme cu prieteni si fosti colegi aflati in productie despre datele din SILV-uri. Pentru necunoscatori SILV-urile sunt niste chestionare intocmite de ocoalele silvice si centralizate mai apoi de catre Institutul National de Statisitca. Informatiile raportate acopera [activitatea silvica](https://insse.ro/cms/ro/content/activitatea-din-silvicultura) din Romania (plantatari, regenerari, tratamente, lemn exploatat, etc). Pe baza acestor chestionare se transmit date catre [Eurostat](https://ec.europa.eu/eurostat) care centralizeaza informatiile la nivel European.
-I-am intrebat cat de veridice sunt datele completate de ei si cat ma pot baza eu pe ele daca vreau sa le folosesc in diferite proiecte sau cercetari.Raspunsul a fost impartit, unii mi-au zis ca ei isi fac treaba corect si completeaza la virgula aceste chestionare, alti mi-au spus ca pe total bat dar compozitia specilor nu prea, alti mi-au zis ca e foarte greu sa tii evidenta tot anul la toate lucrarile si ca le completeaza ochiometric.
-Adevarul e ca nu am reusit sa trag o concluzie si am decis sa testez daca datele transmise catre Eurostat de Romania si restul Europei pentru lemnul rotund, de foc si alte produse de baza urmeaza legea lui Benford. De asemenea am vrut sa vad daca aplicand legea lui Benford, Romania comparativ cu alte tari europene iese din tipar.
+Discutam acum ceva vreme cu prieteni si fosti colegi aflati in productie despre datele din SILV-uri. Pentru necunoscatori SILV-urile sunt niste chestionare intocmite de ocoalele silvice si centralizate mai apoi de catre Institutul National de Statisitca. Informatiile raportate acopera [activitatea silvica](https://insse.ro/cms/ro/content/activitatea-din-silvicultura) din Romania (plantatari, regenerari, tratamente, lemn exploatat, etc). Pe baza acestor chestionare se transmit date catre [Eurostat](https://ec.europa.eu/eurostat) care centralizeaza informatiile la nivel european.
+I-am intrebat cat de veridice sunt datele completate de ei si cat ma pot baza pe ele daca vreau sa le folosesc in diferite proiecte sau cercetari. Raspunsul a fost impartit, unii mi-au zis ca ei isi fac treaba corect si completeaza la virgula aceste chestionare, altii mi-au spus ca pe total bat dar compozitia specilor nu prea, altii mi-au zis ca e foarte greu sa tii evidenta tot anul la toate lucrarile si ca le completeaza ochiometric.
+Adevarul e ca nu am reusit sa trag o concluzie si am decis sa testez daca datele transmise catre Eurostat de Romania si restul Europei pentru lemnul rotund, de foc si alte produse de baza urmeaza legea lui Benford. De asemenea, am vrut sa vad daca aplicand legea lui Benford, Romania, comparativ cu alte tari europene iese din tipar.
 
 
 
@@ -101,7 +99,7 @@ kable(head(dat))
 |Other agglomerates |Total - all species |Exports  |Thousand euro |Germany (until 1990 former territory of the FRG) | 2019| 12761.00|
 
 
-Folosind functia de mai jos, am obtinut valorile unice primele patru coloane. Pe baza acestora am selectat valorile in mii de metri cubi care includ toate speciile si am elimninat tarile Malta, Islanda si agregarea facuta pentru cele 27 de tari europene la nivelul anului 2020 pentru ca au un numar redus de date.  De asemenea denumirea Germaniei si a Europei era prea lunga (*Germany (until 1990 former territory of the FRG),European Union - 28 countries (2013-2020)*) si le-am redenumit.
+ Folosind functia de mai jos, am obtinut valorile unice primele patru coloane. Pe baza acestora am selectat valorile in mii de metri cubi care includ toate speciile si am elimninat tarile Malta, Islanda si agregarea facuta pentru cele 27 de tari europene la nivelul anului 2020 pentru ca au un numar redus de date.  De asemenea denumirea Germaniei si a Europei era prea lunga (*Germany (until 1990 former territory of the FRG), European Union - 28 countries (2013-2020)*) si le-am redenumit.
 
 ```r
 apply(dat[c(1:4)],2,unique)
@@ -139,20 +137,14 @@ prod<-prod[!is.na(prod$values),]
 prod$geo[grep("Germany", prod$geo)]<-"Germany"
 prod$geo[grep("European", prod$geo)]<-"EU"
 prod_2<-prod
-# prod %>% filter(geo %in% c("Austria","Romania","Norway"))%>%
-#   ggplot(aes(time,values,linetype=stk_flow ,color=as.factor(prod_wd)))+
-#   geom_line( show.legend = FALSE)+
-#   facet_wrap(~geo, scales="free")
 ```
 
 
-Analiza se va concentra pe prima cifra a fiecarei valori transmise, desi am uitat sa mentionez mai sus, legea lui Benford se aplica si celei de-a doua cifre bineinteles cu alte proportii datorita cifrei 0.
+Analiza se va concentra pe prima cifra a fiecarei valori transmise. Legea lui Benford se aplica si celei de-a doua cifre bineinteles cu alte proportii datorita cifrei 0.
 
 ```r
 prod$first_digit<-as.numeric(substr(prod$values, 1, 1))
 prod$second_digit<-as.numeric(substr(prod$values, 2, 2))
-## Warning: NAs introduced by coercion
-
 prod<-prod %>% filter(first_digit>0) %>%
   group_by(geo,first_digit)%>% dplyr::summarise(n=n()) %>% mutate(prop=n/sum(n)*100) 
 prod$benford<-log10((prod$first_digit+1)/prod$first_digit)*100
@@ -165,15 +157,15 @@ gg1<-
   labs(x="Cifra",y="%")+
   theme(legend.position = "none")+
   theme_bw()
-# hide_legend(ggplotly(gg1))
 gg1
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
-Din graficul de mai sus se pare ca majoritatea tarilor au aceeasi distributie negativ exponentiala cu cifra 1 in proportie de aproximativ 30-40%. Linia rosie reprezinta distributia teoretica a lui Benford iar barele reprezinta distributia experimentala aferenta fiecarei tari.
+Linia rosie reprezinta distributia teoretica a lui Benford iar barele reprezinta distributia experimentala (reala) aferenta fiecarei tari.
+Din graficul de mai sus se pare ca majoritatea tarilor au aceeasi distributie negativ exponentiala in care cifra 1 apare in proportie de aproximativ 30-40%. 
 
-In R gasim un alt pachet numit [BenfordTests](https://cran.r-project.org/web/packages/BenfordTests/BenfordTests.pdf) care  permite evaluarea din punct de vedere statistic a distributiei lui Benford. Testul Kogmolorov-Smirnov este deseori folosit in analize de acest gen si l-am folosit si eu pentru a determina cat de apropiata este distributia fiecarei tari de distributia legii lui Benford. Testul Kolgomorov-Smirnov calculeaza o statisitca numita *D* care reprezinta distanta absoluta dintre distributia teoretica si cea experimentala. Cu cat de este mai aproape de 0 cu atat distributia tarii este mai apropiata de cea a lui Benford. De asemenea atunci cand  *p-value* este mai mare de *0.05* atunci spune ca setul de date urmeaza legea lui Benford, cand este sub 0.05 setul de date nu respecta legea lui Benford.
-Am scris o functie care va trece prin fiecare setul de date al fiecarei tari si care va calcula indicatorul *D* precum si valoarea *p*. 
+In R gasim un alt pachet numit [BenfordTests](https://cran.r-project.org/web/packages/BenfordTests/BenfordTests.pdf) care  permite evaluarea din punct de vedere statistic a distributiei lui Benford. Testul Kogmolorov-Smirnov este deseori folosit in analize de acest gen si l-am folosit si eu pentru a determina cat de apropiata este distributia fiecarei tari de distributia legii lui Benford. Testul Kolgomorov-Smirnov calculeaza o statisitca numita *D* care reprezinta distanta absoluta dintre distributia teoretica si cea experimentala. Cu cat *D* de este mai aproape de 0 cu atat distributia tarii este mai apropiata de cea a lui Benford. De asemenea, atunci cand  *p-value* este mai mare de *0.05* atunci setul de date urmeaza legea lui Benford, cand este sub 0.05 setul de date nu respecta legea lui Benford.
+Am scris o functie care va trece prin  setul de date al fiecarei tari si va calcula indicatorul *D* precum si valoarea *p*. 
 
 
 ```r
@@ -193,8 +185,7 @@ output %>% ggplot (aes(reorder(geo,-D),D, fill=Semnificatie),)+
 ```
 
 <img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
-Se pare ca doar doua tari urmeaza perfect legea lui Benford. Romania se situeaza relativ bine, apropiata de media Europeana. Motivele pentru care aceste seturi de date nu urmeaza perfect legea lui Benford pot fi diverse. Poate testul folosit nu este destul de riguros si obtinerea valorii *p* prin simulare, asa cum o face pachetul folosit, nu este cea mai exacta. De asemenea in analiza am folosit seturi multiple de date (lemn rotund, lemn de foc, lemn rotund pentru industrie) iar aceasta decizie a dus la obtinerea acestui rezultat sau poate chiar este o problema la nivel european cu datele transmise catre Eurostat. Pentru a ne face o idee clara ar trebui aplicate si comparate cel putin inca doua teste statistice. Mai departe analiza poate continua si se poate indrepta catre cifrele din sir care nu respecta legea lui Benford. Pachetul folosit mai sus ofera o varietate de teste in acest sens. 
-Pentru mine insa a fost destul sa-mi fac o idee asupra validitatii datelor. Grafic se poate observa cum majoritatea tarilor au aceasi distributie negativ exponentiala ceea ce ma face sa cred ca datele transmise de Romania si celalate tari europene arata cel putin tendinta reala a activitatilor din silvicultura.
+Se pare ca doar doua tari urmeaza perfect legea lui Benford. Romania se situeaza relativ bine, apropiata de media Europeana si cu o abatere de aproximativ 3.5 fata de distributia teoretica a lui Benford. Motivele pentru care aceste seturi de date nu urmeaza perfect legea lui Benford pot fi diverse. Unul dintre motive este marimea setului de date pentru  fiecare tara. Ultimele trei tari nu au o activitate silvica intensa iar setul de date in cazul lor a fost redus. De asemenea, in analiza am folosit multiple seturi de date (lemn rotund, lemn de foc, lemn rotund pentru industrie) iar aceasta decizie influenteaza rezultatul. Exista insa si posibilitatea ca analiza sa fie corecta si asta sa fie adevarata abatere a datelor la nivel european de la legea lui Benford. Pentru a ne face o idee clara ar trebui aplicate si comparate cel putin inca doua teste statistice. Mai departe analiza poate continua si se poate indrepta catre cifrele din sir care nu respecta legea lui Benford. Pachetul folosit mai sus ofera o varietate de teste in acest sens. Pentru mine insa, a fost destul sa-mi fac o idee asupra validitatii datelor pe plan european si sa testez aplicabilitatea legii lui Benford pe un set de date despre silvicultura.
 
 
  <br />
@@ -205,7 +196,7 @@ Referinte
 2. Benford, F. (1938). The law of anomalous numbers. Proceedings of the American philosophical society, 551-572.
  <br />
 3. Scott, P. D., & Fasli, M. (2001). Benford's law: An empirical investigation and a novel explanation. Unpublished manuscript
- <br />.
+ <br />
 4. Berger, A., & Hill, T. P. (2011). A basic theory of Benford's Law. Probability Surveys, 8, 1-126.
  <br />
 5. Fewster, R. M. (2009). A simple explanation of Benford's Law. The American Statistician, 63(1), 26-32.
