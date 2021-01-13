@@ -1,18 +1,25 @@
 ---
 title: 'Legea lui Benford si datele Eurostat despre silvicultura '
-author: "Albert Ciceu"
-date: '2021-01-13T21:13:14-05:00'
-categories: R
+author: Albert Ciceu
+date: '2021-01-13'
+slug: benford
+categories:
+  - R
 tags:
-- R Markdown
-- Benford Law
-- Eurostat
+  - Benford Law
+  - Eurostat
+  - R Markdown
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-01-13T15:25:03+02:00'
+featured: no
 image:
   caption: ''
   focal_point: ''
-  preview_only: yes"
+  preview_only: yes
+projects: []
 ---
-
 
 
 
@@ -28,11 +35,11 @@ Tot Benford in lucrarea lui propune urmatoarea relatie logaritmica pentru a dete
 $$
 F_a= log(\frac{a+1}{a})
 $$
-unde `\(F_a\)` reprezinta frecvena cifrei `\(a\)` ca prima cifra a unui numar iar `\(log\)` este in baza 10.
+unde $F_a$ reprezinta frecvena cifrei $a$ ca prima cifra a unui numar iar $log$ este in baza 10.
 
 Utilizand relatia de mai sus putem genera probabilitatea asociata fiecarei cifre.
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-2-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-2-1.png" width="672" />
 
 Legea este foarte simpla si se aplica unui numar mare de seturi de date. Benford a testat legea pe 20 de seturi de date care apar fie in natura fie au la baza actiunile omului. De exemplu, lungimea si suprafata raurilor din lume, numerele asociate adreselor sau rata mortalitati, toate acestea dar si multe altele seturi de date urmeaza legea lui Benford. 
 
@@ -160,7 +167,7 @@ gg1<-
 gg1
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-8-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" />
 Linia rosie reprezinta distributia teoretica a lui Benford iar barele reprezinta distributia experimentala (reala) aferenta fiecarei tari.
 Din graficul de mai sus se pare ca majoritatea tarilor au aceeasi distributie negativ exponentiala in care cifra 1 apare in proportie de aproximativ 30-40%. 
 
@@ -184,7 +191,7 @@ output %>% ggplot (aes(reorder(geo,-D),D, fill=Semnificatie),)+
   theme_bw()
 ```
 
-<img src="{{< blogdown/postref >}}index_files/figure-html/unnamed-chunk-9-1.png" width="672" />
+<img src="{{< blogdown/postref >}}index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" />
 Se pare ca doar doua tari urmeaza perfect legea lui Benford. Romania se situeaza relativ bine, apropiata de media Europeana si cu o abatere de aproximativ 3.5 fata de distributia teoretica a lui Benford. Motivele pentru care aceste seturi de date nu urmeaza perfect legea lui Benford pot fi diverse. Unul dintre motive este marimea setului de date pentru  fiecare tara. Ultimele trei tari nu au o activitate silvica intensa iar setul de date in cazul lor a fost redus. De asemenea, in analiza am folosit multiple seturi de date (lemn rotund, lemn de foc, lemn rotund pentru industrie) iar aceasta decizie influenteaza rezultatul. Exista insa si posibilitatea ca analiza sa fie corecta si asta sa fie adevarata abatere a datelor la nivel european de la legea lui Benford. Pentru a ne face o idee clara ar trebui aplicate si comparate cel putin inca doua teste statistice. Mai departe analiza poate continua si se poate indrepta catre cifrele din sir care nu respecta legea lui Benford. Pachetul folosit mai sus ofera o varietate de teste in acest sens. Pentru mine insa, a fost destul sa-mi fac o idee asupra validitatii datelor pe plan european si sa testez aplicabilitatea legii lui Benford pe un set de date despre silvicultura.
 
 

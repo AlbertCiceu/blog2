@@ -17,9 +17,9 @@ options(
   blogdown.knit.on_save = FALSE,
   # build .Rmd to .html (via Pandoc); to build to Markdown, set this option to 'markdown'
   blogdown.method = 'markdown',
-  blogdown.author = "Albert Ciceu"
-  #blogdown.ext = ".Rmarkdown",
-  #blogdown.subdir = "post"
+  blogdown.author = "Albert Ciceu",
+  blogdown.ext = ".Rmarkdown",
+  blogdown.subdir = "post"
 )
 
 # fix Hugo version

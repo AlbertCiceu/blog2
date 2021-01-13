@@ -1,18 +1,25 @@
 ---
 title: 'Legea lui Benford si datele Eurostat despre silvicultura '
-author: "Albert Ciceu"
-date: '2021-01-13T21:13:14-05:00'
-categories: R
+author: Albert Ciceu
+date: '2021-01-13'
+slug: benford
+categories:
+  - R
 tags:
-- R Markdown
-- Benford Law
-- Eurostat
+  - Benford Law
+  - Eurostat
+  - R Markdown
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-01-13T15:25:03+02:00'
+featured: no
 image:
   caption: ''
   focal_point: ''
-  preview_only: yes"
+  preview_only: yes
+projects: []
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(collapse =TRUE)
@@ -42,7 +49,7 @@ Tot Benford in lucrarea lui propune urmatoarea relatie logaritmica pentru a dete
 $$
 F_a= log(\frac{a+1}{a})
 $$
-unde $F_a$ reprezinta frecvena cifrei $a$ ca prima cifra a unui numar iar $log$ este in baza 10.
+unde $F_a$ reprezinta frecvena cifrei $a$ ca prima cifra a unui numar iar $log$ este in baza 1000.
 
 Utilizand relatia de mai sus putem genera probabilitatea asociata fiecarei cifre.
 
