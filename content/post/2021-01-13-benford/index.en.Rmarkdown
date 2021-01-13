@@ -8,7 +8,7 @@ categories:
 tags:
   - Benford Law
   - Eurostat
-  - R Markdown
+  - Silvicultura
 subtitle: ''
 summary: ''
 authors: []
@@ -117,7 +117,7 @@ prod_2<-prod
 ```
 
 
-Analiza se va concentra pe prima cifra a fiecarei valori transmise. Legea lui Benford se aplica si celei de-a doua cifre dint-un numar dar cu alte proportii datorita cifrei 0.
+Analiza se va concentra pe prima cifra a fiecarei valori transmise. Legea lui Benford se aplica si celei de-a doua cifre dintr-un numar dar cu alte proportii datorita cifrei 0.
 ```{r,message=FALSE, warning=FALSE}
 prod$first_digit<-as.numeric(substr(prod$values, 1, 1))
 prod$second_digit<-as.numeric(substr(prod$values, 2, 2))

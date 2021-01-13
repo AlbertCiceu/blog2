@@ -35,7 +35,7 @@ Tot Benford in lucrarea lui propune urmatoarea relatie logaritmica pentru a dete
 $$
 F_a= log(\frac{a+1}{a})
 $$
-unde $F_a$ reprezinta frecvena cifrei $a$ ca prima cifra a unui numar iar $log$ este in baza 10.
+unde $F_a$ reprezinta frecventa cifrei $a$ ca prima cifra a unui numar iar $log$ este in baza 10.
 
 Utilizand relatia de mai sus putem genera probabilitatea asociata fiecarei cifre.
 
@@ -147,7 +147,7 @@ prod_2<-prod
 ```
 
 
-Analiza se va concentra pe prima cifra a fiecarei valori transmise. Legea lui Benford se aplica si celei de-a doua cifre dint-un numar dar cu alte proportii datorita cifrei 0.
+Analiza se va concentra pe prima cifra a fiecarei valori transmise. Legea lui Benford se aplica si celei de-a doua cifre dintr-un numar dar cu alte proportii datorita cifrei 0.
 
 ```r
 prod$first_digit<-as.numeric(substr(prod$values, 1, 1))
