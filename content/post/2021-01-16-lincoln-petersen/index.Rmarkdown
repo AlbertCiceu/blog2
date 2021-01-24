@@ -1,0 +1,201 @@
+---
+title: Prins, marcat, recapturat
+author: Albert Ciceu
+date: '2021-01-24'
+slug: lincoln-petersen
+categories:
+  - R
+tags:
+  - Lincoln-Petersen
+  - size of population
+  - simulation
+subtitle: ''
+authors: ''
+summary: ''
+lastmod: '2021-01-24T21:58:53+02:00'
+featured: no
+image:
+  caption: '<span>Photo by <a href="https://unsplash.com/@vincentvanzalinge?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Vincent van Zalinge</a> on <a href="https://unsplash.com/s/photos/rabbits?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>'
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+Cati iepuri are padurea sau cum estimezi numarul de exemplare al unei populatii? Ideal ar fi sa numaram toate exemplarele populatie dar acest lucru nu este fezabil. Zilele trecute cautand in diferite surse modalitati prin care pot estima numarul total al unei populatii cercetate, am dat peste o statistica interesanta, *modelul Lincoln-Petersen* [1]. Acest model este des folosit in determinarea numarului total al populatiilor de animale din salbaticie. Modelul este foarte simplu de implementat si se aplica unor populatii inchise. O populatie inchisa este o populatie care se poate deplasa pe un spatiu limitat, adica nu poate primi alti indivizi de la alta populatie iar indivizii acesteia nu pot iesi din zona populata. De asemenea acest model presupune ca rata mortalitatii si a natalitatii sunt egale. Aceste presupuneri sunt rareori indeplinite dar exista modalitati prin care se pot corecta eventualele erori rezultate din incalcarea acestor presupuneri. Metoda se mai numeste si *prinde-marcheaza-recaptureaza* care practic sumarizeaza metodologia aplicata. <br />
+
+Metodologia presupune doua etape. In prima etapa este prins un esantion de exemplare si marcat fiecare individ astfel incat marcajul sa nu se piarda.  Exemplarele primului esantion sunt eliberate astfel incat sa se asigure amestecul omogen al acestora in populatie. In a doua etapa este prins un alt esantion care va fi format din exemplarele marcate in prima etapa si exemplare nemarcate. Modelul se bazeaza pe presupunerea ca proportia de indivizi marcati din totalul indivizilor prinsi in a doua etapa este egala cu proportia indivizilor prinsi in prima etapa din populatia totala. Practic numarul total al indivizilor din populatie se poate determina folosind ecuatia:
+$$
+\frac{R}{C}=\frac{M}{N}=>N=\frac{MC}{R}
+$$
+unde $ N $ reprezinta numarul total al indivizilor, $ M $ reprezinta numarul indivizilor capturati prima oara, $ C $ reprezinta numarul indivizilor capturati a doua oara iar $ R $ reprezinta numarul indivizilor marcati.
+Daca numarul de indivizi prinsi este mic atunci se prefera o formula modificata:
+$$
+N=\frac{(M+1)(C+1)}{R+1}-1
+$$
+
+
+In R putem scrie un mic program care sa simuleze intreg procesul de prindere, marcare si recapturare. Sa presupunem ca noi stim care este populatia de iepuri din zona si vrem sa testam daca modelul Lincoln-Petersen functioneaza. Populatia noastra este alcatuita din 800 de iepuri care au fost deja numerotati de la 1 la 800, iar pentru a-i prinde am amplasat 10 sisteme de capturare in zone des frecventate de iepuri. Vom folosi functia [sample](https://www.rdocumentation.org/packages/base/versions/3.6.2/topics/sample) care extrage aleatoriu un numar de elemente dintr-o multime specificata. De exemplu, functia de mai jos extrage 10 elemente aleatoriu dintr-un sir de numere de la 1 la 400, iar numerele sunt returnate mai jos 284, 336, 101, s.a.m.d. Daca rulam din nou functia vom obtine alte 10 numere diferite. Prin setarea argumentului *replace=FALSE* ii spunem functiei ca un numar poate fi extras doar o singura data, adica nu vom avea de mai multe ori in cele 10 numere aceeasi cifra.  
+
+
+```{r, warning=FALSE,message=FALSE}
+require(kableExtra)
+require(ggplot2)
+library(plyr); library(dplyr)
+require(reshape2)
+```
+
+```{r, echo=FALSE}
+set.seed(1234)
+```
+
+```{r}
+sample(size = 10,x = seq(1,400,1),replace = FALSE)
+
+
+```
+
+
+Mai sus, argumentul *size* a fost specificat de noi ca fiind 10 insa acesta poate fi considerat numarul de iepuri prinsi in prima etapa. Putem scrie o alta functie *sample* care sa determine numarul de iepuri prinsi in prima etapa, adica litera *M* din functia lui Lincoln-Petersen. Stiind ca am amplasat 10 sisteme de capturare si stiind cat de performante sunt acestea numarul minim de iepuri pe care il putem avea in prima etapa este de 10, unul pentru fiecare sistem iar numarul maxim este de 800, adica intreaga populatie. Asadar functia care va determina numarul de iepuri prinsi poate fi scrisa ca:
+
+```{r, echo=FALSE}
+set.seed(1234)
+```
+```{r}
+M<-sample(size = 1,x = seq(10,800,1))
+M
+```
+unde *size=1* pentru ca avem nevoie doar de un numar iar multimea din care va extrage este de la 10 la 800. Se pare ca am capturat 293 de iepuri deci *M= 293*. Avand acum marimea primului esantion putem sa vedem care iepuri au fost prinsi.
+
+```{r, echo=FALSE}
+set.seed(1234)
+```
+
+```{r}
+k<-sample(size = M,x = seq(1,800,1),replace = FALSE)
+k
+```
+
+Din cei 800 de iepuri am prin iepurele 284, 101 pana la iepurele 164. I-am marcat pe toti si le dam drumul inapoi in libertate. Mergem la etapa a doua. Amplasam din nou cele 10 sisteme de capturare si prindem iepurii ruland din nou aceasi functie care determina cati iepuri am prins. Rezultatul este 151 de iepuri, deci *C=151* 
+
+```{r, echo=FALSE}
+set.seed(12345)
+```
+```{r, echo=FALSE}
+C<-sample(size = 1,x = seq(10,800,1))
+C
+```
+Hai sa vedem cati dintre cei 151 sunt marcati. Rulam  din nou functia *sample* cu argumentul *size=C*
+
+```{r, echo=FALSE}
+set.seed(12345)
+```
+```{r}
+q<-sample(size = C,x = seq(1,800,1))
+q
+```
+
+Folosind functia *intersect* comparam cele doua seturi de numere si identificam cate cifre se regasesc in cele doua seturi, respectiv cati iepuri marcati au fost prinsi in a doua etapa.
+
+```{r, echo=FALSE}
+set.seed(12345)
+```
+
+```{r}
+R<-length(intersect(k,q))
+R
+```
+
+Doar 46 de iepruri marcati au fost identificati in a doua etapa, deci *R=46*.
+
+Avand toate elementele ecuatiei putem inlocui si determina *N*, adica numarul total al populatiei. Noi stim ca este 800 dar vrem sa vedem cat de bine functioneaza modelul *Lincoln-Petersen*. Folosind formula pentru un numar redus, *N* este egal cu 950.
+
+
+```{r}
+N<-((M+1)*(C+1)/(R+1))-1
+round(N)
+```
+Nu este departe de 800. Se poate calcula eroarea modelului pentru a determina intervalul de incredere al acestei statistici.
+Varianta $ (s^2) $, deviatia standard $ (s) $ si intervalul de incredere de *95%* se pot calcula cu urmatoarele formule:
+
+
+$$
+s^2=\frac{(M+1)(C+1)(M-R)(C-R)}{(R+1)^2(R+2)}
+$$  
+```{r}
+varN<-((M+1)*(C+1)*(M-R)*(C-R))/(((R+1)^2)*(R+2))
+varN
+```
+$$
+s=\sqrt(s^2)
+$$
+```{r}
+s<-sqrt(varN)
+s
+```
+$$
+N\pm1.965*s
+$$
+
+
+
+```{r}
+round(N- 1.965* sqrt(varN))
+round(N+ 1.965* sqrt(varN))
+```
+
+Asadar *N* este 950 cu un interval de incredere de 95% cuprins intre 744 si 1155. Numarul real al populatiei este inclus in intervalul de incredere al estimarii noastre deci modelul Lincoln-Petersen reuseste sa estimeze cu succes numarul total al populatiei de iepuri. Intrebarea este, ce se intampla daca este repetat intreg experimentul, vom ajunge la acelasi rezultat? Putem afla foarte usor introducand liniile de cod de mai sus intr-un *for loop* care sa repete intreg procesul de prindere, marcare si recapturare de 100 de ori.
+
+
+```{r, echo=FALSE}
+set.seed(12345)
+```
+
+
+```{r, message=FALSE,warning=FALSE}
+out<- data.frame(matrix(nrow = 100,ncol=4,))
+names(out)<-c("M","C","R","N")
+for (i in 1:100){
+  M<-sample(size = 1,x = seq(10,800,1)) 
+  k<-sample(size = M,x = seq(1,800,1),replace = FALSE)
+  C<-sample(size = 1,x = seq(10,800,1))
+  q<-sample(size = C,x = seq(1,800,1))
+  R<-length(intersect(k,q))
+  N<-((M+1)*(C+1)/(R+1))-1
+  out$M[i]<-M
+  out$C[i]<-C
+  out$R[i]<-R
+  out$N[i]<-round(N)
+}
+
+mu <-  out %>% melt()%>%ddply( "variable", summarise, grp.mean=mean(value))
+  out %>% melt()%>%
+   ggplot(aes(x=value, fill=variable))+
+   geom_histogram()+
+   labs(y= "Frecventa",x="Valoare", fill="Parametru")+
+   geom_vline(data=mu, aes(xintercept=grp.mean), color="black", size=1.3,
+             linetype="dashed")+
+    facet_wrap(~variable, scales= "free")
+ 
+```
+Distributia celor 100 de simulari demonstreaza ca majoritatea estimarilor *N* se situeaza in jurul cifrei 800, linia neagra punctata indica media celor 100 de simulari pentru fiecare parametru.
+
+Media numarului de iepuri *(N)* este 802 cu un interval de incredere de 95% cuprins intre 610 si 993.
+
+```{r}
+
+round(mean(out$N))
+round(mean(out$N)- 1.965* sqrt(var(out$N)))
+round(mean(out$N)+ 1.965* sqrt(var(out$N)))
+```
+In R exista mai multe pachete destinate acestui fel de analize. Unul dintre acestea este numit [marker](https://cran.r-project.org/web/packages/marked/marked.pdf) care permite estimare numarului de indivizi si pentru populatii deschise. <br />
+
+Spor la prins, marcat si recapturat!
+
+
+ <br />
+Referinte 
+ <br />
+1. Nichols, J. D. (1992). Capture-recapture models. BioScience, 42(2), 94-102.
+<br />
+
