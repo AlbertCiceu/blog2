@@ -163,7 +163,7 @@ ggplot(weisse, aes(factor(n), dif, group=n,fill=factor(n)))+
 ```
 
 
-O lucrare mai recenta [7] vine cu o imbunatatire a regulii lui Weise. Cercetatorii demonstreaza ca media artimetica a diametrelor arborilor  6 si 7, 4 si 8 sau 3 si 9 reprezinta o mai buna estimare a diametrului mediu patratic decat diametrul arborelui 6.
+O lucrare mai recenta [7] vine cu o imbunatatire a regulii lui Weise. Cercetatorii demonstreaza ca media artimetica a diametrelor arborilor  6 si 7, 4 si 8 sau 3 si 9 reprezinta o mai buna estimare a diametrului mediu patratic decat diametrul arborelui 6. <br />
 In orice caz, mi se pare fascinant cum la 1880, Weise reuseste sa formuleze aceasta regula. Oare in ce alte domenii se poate folosi sau este deja utilizata aceasta legitate?
 
 
