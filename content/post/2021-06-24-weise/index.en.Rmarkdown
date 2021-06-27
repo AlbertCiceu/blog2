@@ -120,8 +120,8 @@ Peste 30 din cele 66 de suprafete au media patratica a diametrelor apropiata de 
 
 Observam ca nu numai diametrul celui de-al 6-lea arbore poate reprezenta media patratica a unei suprafete.
 Cand este totusi aplicabila regula lui Weise?
-Aplicabilitate regulii lui Weise tine de tipul de distrbutie a numarului de arbori pe categorii de diametre din suprafata de interes. Practic acolo unde distributia arborilor pe categorii de diametre este apropiata de distributia normala [4] dimensiunea arborelui 6 va fi egala cu media patratica a diametrelor deoarece valoarea quantilei 6 din distributia normala este aproximativ egala cu media patratica.  
-Daca vizualizam distributia arborilor pe categorii de diametre a celor 33 de ploturi unde arborele 6 a avut dimensiunea cea mai apropiata de media patratica a intregii suprafete, observam ca distributiile acestora sunt asemanatoare cu distributia normala.
+Aplicabilitate regulii lui Weise tine de tipul de distrbutie a numarului de arbori pe categorii de diametre din suprafata de interes. Practic acolo unde distributia arborilor pe categorii de diametre este apropiata de distributia normala [4] dimensiunea arborelui 6 va fi egala cu media patratica a diametrelor deoarece valoarea cuantilei 6 din distributia normala este aproximativ egala cu media patratica.  
+Daca vizualizam distributia arborilor pe categorii de diametre a celor 33 de suprafete unde arborele 6 a avut dimensiunea cea mai apropiata de media patratica a intregii suprafete, observam ca distributiile acestora sunt asemanatoare cu distributia normala.
 
 
 ```{r, warning=FALSE,message=FALSE}
@@ -134,9 +134,9 @@ spati[spati$plot %in% c(weisse$plot[weisse$n==6]),] %>%
   labs(x="Diametrul")+
   theme_bw()
 ```
-Linia verticala albastra reprezinta media patratica a diametrelor aferenta fiecarei suprafete iar linia rosie punctata reprezinta media diametrelui arborelui 6 din cele *n* seturi de 10 arbori extrase pentru fiecare suprafata. Diferentele sunt nesemnificative in cele mai multe cazuri si putem observa ca majoritatea distributiilor sunt apropiate de distributia normala.
+Linia verticala albastra reprezinta media patratica a diametrelor aferenta fiecarei suprafete iar linia rosie punctata reprezinta media diametrelor arborelui 6 din cele *n* seturi de 10 arbori extrase pentru fiecare suprafata. Diferentele sunt nesemnificative in cele mai multe cazuri si putem observa ca majoritatea distributiilor sunt apropiate de distributia normala.
 
-Acolo unde distributia arborilor nu este apropiata de distributia normala cercetarile [5, 6] au demonstrat ca se pot folosi dimeniunile arborelui 5, 7 sau 8. De exemplu acolo unde distributia arborilor pe categorii de diametre are o forma negativ exponentila se poate folosi diametrul arborelui 8.
+Acolo unde distributia arborilor nu este apropiata de distributia normala cercetarile [5, 6] au demonstrat ca se pot folosi dimensiunile arborelui 5, 7 sau 8. De exemplu acolo unde distributia arborilor pe categorii de diametre are o forma negativ exponentiala se poate folosi diametrul arborelui 8.
 
 ```{r, warning=FALSE,message=FALSE}
 spati[spati$plot %in% c(weisse$plot[weisse$n %in% c(8)]),] %>%
@@ -150,7 +150,7 @@ spati[spati$plot %in% c(weisse$plot[weisse$n %in% c(8)]),] %>%
 
 ```
 
-Nu este cazul plotului 21 dar forma distributiei numarului de arbori pe categorii de diametre in celalalte ploturi este similara cu cea negtiv exponentiala.
+Nu este cazul plotului 21 dar forma distributiei numarului de arbori pe categorii de diametre in celalalte ploturi este similara cu cea negativ exponentiala.
 Dupa cum se poate observa in graficul de mai jos erorile asociate acestei metode sunt reduse de pana la 1.5 cm. 
 Aceasta metoda este implementata pentru determinarea rapida a diametrului mediu patratic in amenajarea padurilor in Slovacia sau Cehia stabilindu-se pentru fiecare tip de padure numarul arborelui care estimeaza cel mai bine media arboretelor.
 
@@ -164,7 +164,7 @@ ggplot(weisse, aes(factor(n), dif, group=n,fill=factor(n)))+
 
 
 O lucrare mai recenta [7] vine cu o imbunatatire a regulii lui Weise. Cercetatorii demonstreaza ca media artimetica a diametrelor arborilor  6 si 7, 4 si 8 sau 3 si 9 reprezinta o mai buna estimare a diametrului mediu patratic decat diametrul arborelui 6.
-In orice caz, mi se pare fascinant cum la 1880 Weise reuseste sa formuleze aceasta regula.
+In orice caz, mi se pare fascinant cum la 1880, Weise reuseste sa formuleze aceasta regula. Oare in ce alte domenii se poate folosi sau este deja utilizata aceasta legitate?
 
 
 Referinte
